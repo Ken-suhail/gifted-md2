@@ -105,7 +105,6 @@ gmd({
 }, 
 }, async (from, Gifted, conText) => {
 const { mek, sender, react, config, pushName, botPic, botMode, botVersion, botName, botFooter, timeZone, botPrefix, newsletterJid } = conText;
-    try {
       function formatUptime(seconds) {
             const days = Math.floor(seconds / (24 * 60 * 60));
             seconds %= 24 * 60 * 60;
