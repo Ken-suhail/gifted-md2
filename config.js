@@ -40,8 +40,8 @@ module.exports = {
     AUTO_BIO : process.env.AUTO_BIO || 'false',
     AUTO_BLOCK: process.env.AUTO_BLOCK || '',
     YT: process.env.YT || 'youtube.com/@giftedtechnexus',
-    NEWSLETTER_JID: process.env.NEWSLETTER_JID || '120363408839929349@newsletter',
-    NEWSLETTER_URL: process.env.NEWSLETTER_URL || 'https://whatsapp.com/channel/0029Vb3hlgX5kg7G0nFggl0Y',
+    NEWSLETTER_JID: process.env.NEWSLETTER_JID || '120363425418645942@newsletter',
+    NEWSLETTER_URL: process.env.NEWSLETTER_URL || 'https://whatsapp.com/channel/0029VbC5WlPL7UVQ6AbK7x2n',
     BOT_REPO: process.env.BOT_REPO || 'mauricegift/gifted-md',
     PACK_NAME: process.env.PACK_NAME || '𝐆𝐈𝐅𝐓𝐄𝐃 𝐌𝐃',
     PACK_AUTHOR: process.env.PACK_AUTHOR || '𝐆𝐈𝐅𝐓𝐄𝐃 𝐓𝐄𝐂𝐇'
