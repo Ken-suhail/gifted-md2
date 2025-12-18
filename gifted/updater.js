@@ -1,9 +1,3 @@
-const { gmd } = require("../gift");
-const axios = require('axios');
-const fs = require('fs');
-const path = require("path");
-const AdmZip = require("adm-zip");
-
 gmd({
     pattern: "update",
     alias: ["updatenow", "updt", "sync", "update now"],
@@ -48,7 +42,13 @@ gmd({
 
         const sourcePath = path.join(extractPath, 'gifted-md-main'); // Replace this  with your bot name and branch if you're cloning
         const destinationPath = path.join(__dirname, '..');
-        copyFolderSync(sourcePath, destinationPath);
+        
+        const excludeList = [
+            '.env',
+            'gift/database.db'
+        ];
+        
+        copyFolderSync(sourcePath, destinationPath, excludeList);
         await setCommitHash(latestCommitHash);
 
         fs.unlinkSync(zipPath);
@@ -66,23 +66,42 @@ gmd({
     }
 });
 
-function copyFolderSync(source, target) {
+function copyFolderSync(source, target, excludeList = ['.env']) {
     if (!fs.existsSync(target)) {
         fs.mkdirSync(target, { recursive: true });
     }
 
     const items = fs.readdirSync(source);
+    
     for (const item of items) {
         const srcPath = path.join(source, item);
         const destPath = path.join(target, item);
 
-        if (item === ".env") {
-            console.log(`Skipping ${item} to preserve custom settings/vars ie session id.`);
+        let shouldExclude = false;
+        
+        for (const excludePattern of excludeList) {
+            if (item === excludePattern) {
+                shouldExclude = true;
+                console.log(`Skipping ${item} to preserve custom settings.`);
+                break;
+            }
+            
+            const relativePath = path.relative(source, srcPath);
+            if (relativePath === excludePattern || relativePath.startsWith(excludePattern + path.sep)) {
+                shouldExclude = true;
+                console.log(`Skipping ${relativePath} to preserve custom settings.`);
+                break;
+            }
+        }
+        
+        if (shouldExclude) {
             continue;
         }
 
-        if (fs.lstatSync(srcPath).isDirectory()) {
-            copyFolderSync(srcPath, destPath);
+        const stat = fs.lstatSync(srcPath);
+        
+        if (stat.isDirectory()) {
+            copyFolderSync(srcPath, destPath, excludeList);
         } else {
             fs.copyFileSync(srcPath, destPath);
         }
