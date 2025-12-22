@@ -231,9 +231,6 @@ gmd({
   description: "Promote a user to admin.",
 }, async (from, Gifted, conText) => {
   const { reply, react, sender, quotedUser, superUser, isSuperAdmin, isAdmin, isGroup, isBotAdmin, mek, groupAdmins, groupSuperAdmins } = conText;
-
-  console.log("DEBUG - quotedUser received:", quotedUser);
-  console.log("DEBUG - quotedUser type:", typeof quotedUser);
   
   if (!isGroup) {
     return reply("This command only works in groups!");
@@ -260,7 +257,6 @@ gmd({
     try {
       const cleanLid = quotedUser.startsWith('@') ? quotedUser.substring(1) : quotedUser;
       finalResult = await Gifted.getJidFromLid(cleanLid);
-      console.log("DEBUG - Converted lid to jid:", finalResult);
     } catch (error) {
       console.error("Error converting lid:", error);
       await react("❌");
